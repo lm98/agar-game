@@ -1,6 +1,13 @@
 use bevy::prelude::*;
 use player::PlayerPlugin;
+
+mod components;
 mod player;
+
+// region: --- Constants
+const TIME_STEP: f32 = 1. / 60.;
+const BASE_SPEED: f32 = 500.;
+// endregion: --- Constants
 
 fn main() {
     App::new()
