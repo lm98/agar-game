@@ -38,6 +38,14 @@ fn player_keyboard_event_system(
             1.
         } else {
             0.
+        };
+
+        velocity.y = if kb.pressed(KeyCode::Up) {
+            1.
+        } else if kb.pressed(KeyCode::Down) {
+            -1.
+        } else {
+            0.
         }
     }
 }
