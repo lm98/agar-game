@@ -7,7 +7,13 @@ mod player;
 // region: --- Constants
 const TIME_STEP: f32 = 1. / 60.;
 const BASE_SPEED: f32 = 500.;
-// endregion: --- Constants
+
+// region: --- Resources
+pub struct WinSize {
+    pub w: f32,
+    pub h: f32,
+}
+// endregion: --- Resources
 
 fn main() {
     App::new()
@@ -25,6 +31,15 @@ fn main() {
 }
 
 //bevy will inject arguments by type
-fn setup_system(mut commands: Commands) {
+fn setup_system(
+    mut commands: Commands,
+    mut windows: ResMut<Windows>,
+) {
     commands.spawn_bundle(Camera2dBundle::default());
+
+    let window = windows.get_primary_mut().unwrap();
+    let (win_w, win_h) = (window.width(), window.height());
+
+    let win_size = WinSize { w: win_w, h: win_h };
+    commands.insert_resource(win_size);
 }
