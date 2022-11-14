@@ -1,9 +1,11 @@
 use bevy::prelude::*;
 use components::{Velocity, Movable};
+use enemy::EnemyPlugin;
 use player::PlayerPlugin;
 
 mod components;
 mod player;
+mod enemy;
 
 // region: --- Constants
 const TIME_STEP: f32 = 1. / 60.;
@@ -27,6 +29,7 @@ fn main() {
         })
         .add_plugins(DefaultPlugins)
         .add_plugin(PlayerPlugin)
+        .add_plugin(EnemyPlugin)
         .add_startup_system(setup_system)
         .add_system(movable_system)
         .run();
@@ -55,5 +58,16 @@ fn movable_system(
         let translation = &mut transform.translation;
         translation.x += velocity.x * TIME_STEP * BASE_SPEED;
         translation.y += velocity.y * TIME_STEP * BASE_SPEED;
+
+        if movable.auto_despawn {
+            const MARGIN: f32 = 200.;
+            if translation.y > win_size.h / 2. + MARGIN
+            || translation.y < -win_size.h / 2. - MARGIN
+            || translation.x > win_size.w / 2. + MARGIN
+            || translation.x < -win_size.w / 2. - MARGIN
+            {
+                commands.entity(entity).despawn();
+            }
+        }
     }
-}
+} 

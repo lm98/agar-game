@@ -13,7 +13,8 @@ impl Plugin for PlayerPlugin {
     }
 }
 
-fn player_spawn_system(mut commands: Commands, 
+fn player_spawn_system(
+    mut commands: Commands, 
     mut meshes: ResMut<Assets<Mesh>>,
     mut materials: ResMut<Assets<ColorMaterial>>,
 ){
